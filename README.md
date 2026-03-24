@@ -1,20 +1,20 @@
 # SmartRehabBar
 
-**Smart Rehab** es un proyecto innovador centrado en el **desarrollo de un sistema inteligente que se acopla a las barras de sujeción utilizadas en procesos de rehabilitación física por personas con dificultades de movilidad**. El dispositivo incorpora células de carga, que permiten registrar de manera precisa el tiempo de uso y la fuerza de apoyo ejercida sobre las barras durante los ejercicios realizados con el fisioterapeuta.
+**SmartRehabBar** es un proyecto centrado en el **desarrollo de un sistema inteligente que se integra en barras de rehabilitación**, permitiendo medir de forma objetiva la fuerza de apoyo ejercida por pacientes durante ejercicios de recuperación funcional.
 
-El sistema recoge estos datos y los visualiza de forma clara para profesionales de la salud, facilitando un seguimiento objetivo de la evolución del paciente. Además, el proyecto está diseñado para integrar técnicas de análisis avanzado e inteligencia artificial que permitan, en fases posteriores, detectar patrones, descompensaciones y tendencias de mejora que complementen el criterio clínico.
+El sistema utiliza **células de carga** para registrar la carga aplicada, enviando los datos en tiempo real a una plataforma web para su visualización. Esto permite a los profesionales sanitarios realizar un seguimiento cuantitativo de la evolución del paciente.
 
-La solución se instala sobre barras existentes o rediseñadas y está pensada tanto para su uso en entornos sanitarios reales como para su aplicación educativa en Formación Profesional, permitiendo trabajar con un caso técnico completo y realista.
+Además, el proyecto está diseñado con un enfoque **educativo y modular**, facilitando su uso en Formación Profesional y permitiendo futuras ampliaciones como análisis avanzado e integración de inteligencia artificial.
 
 ---
 
 ## 🎯 Objetivos del proyecto
 
-- Medir de forma objetiva la **fuerza de apoyo** ejercida durante ejercicios de rehabilitación.
-- Registrar el **tiempo de carga** y detectar posibles descompensaciones.
-- Facilitar datos cuantitativos al fisioterapeuta para mejorar la toma de decisiones.
-- Desarrollar un sistema **replicable, modular y de bajo coste**, orientado a FP y centros sociosanitarios.
-- Servir como base para futuras ampliaciones (doble apoyo, análisis avanzado, IA).
+* Medir de forma objetiva la **fuerza de apoyo** durante ejercicios de rehabilitación.
+* Registrar el **tiempo de carga** y detectar descompensaciones.
+* Facilitar datos cuantitativos al fisioterapeuta.
+* Desarrollar un sistema **replicable, modular y de bajo coste**.
+* Servir como base para futuras ampliaciones (doble apoyo, IA, análisis avanzado).
 
 ---
 
@@ -25,98 +25,151 @@ El sistema electrónico se compone de los siguientes bloques:
 1. Sensórica de fuerza mediante células de carga.
 2. Amplificación y conversión ADC con HX711.
 3. Microcontrolador ESP32 para procesado y comunicaciones.
-4. Sistema de alimentación con batería Li-Ion y regulación a 3,3 V.
-5. Comunicación WiFi con un servidor remoto para visualización y análisis de datos.
+4. Sistema de alimentación autónomo con batería Li-Ion.
+5. Comunicación WiFi con servidor remoto para visualización de datos.
 
 ---
 
 ## 🧪 Material electrónico utilizado
 
 ### Sensores
-- **Células de carga resistivas** (galgas extensométricas).
-- Configuración en puente de Wheatstone para mejorar estabilidad y sensibilidad.
+
+* **Células de carga resistivas** (galgas extensométricas).
+* Configuración en puente de Wheatstone para mayor estabilidad.
 
 ### Conversión y amplificación
-- **HX711**
-  - ADC de 24 bits específico para células de carga.
-  - Uso del canal A con ganancia 128.
-  - Alta resolución para mediciones de fuerza lenta y estable.
+
+* **HX711**
+
+  * ADC de 24 bits específico para células de carga.
+  * Alta precisión para señales de baja variación.
 
 ### Microcontrolador
-- **ESP32**
-  - Lectura del HX711.
-  - Procesado de datos.
-  - Comunicación WiFi.
-  - Envío de datos a un backend REST.
+
+* **ESP32 / ESP32-C3**
+
+  * Lectura del HX711.
+  * Procesado de datos.
+  * Comunicación WiFi.
+  * Envío de datos a backend REST.
 
 ### Alimentación
-- **Batería Li-Ion 18650** (3,0–4,2 V).
-- **Gestor de carga MCP73871**
-  - Carga mediante USB-C.
-  - Soporte de alimentación simultánea (power-path).
-- **Convertidor Buck-Boost TP563020**
-  - Generación de 3,3 V estables para el sistema.
 
-> La medición de batería no está incluida en la primera versión de firmware.
+* **Batería Li-Ion 18650** (3.0–4.2 V).
+* **MCP73871**
+
+  * Gestión de carga.
+  * Power-path (uso y carga simultánea).
+* **Convertidor Buck-Boost (TPS63020)**
+
+  * Generación de tensión estable para el sistema.
+* **Divisor resistivo**
+
+  * Medición del voltaje de batería mediante ADC.
 
 ---
 
 ## 🧠 Firmware
 
-### PesajeV1 (versión actual)
+En este repositorio se incluyen varias versiones del firmware:
 
-En este repositorio se ha subido el firmware **PesajeV1**, que corresponde a una **primera versión funcional y simplificada** del sistema.
+### 🔹 PesajeV1
 
-Características de esta versión:
-- Medición de fuerza para **una sola pierna / punto de apoyo**.
-- Lectura de una célula de carga mediante HX711.
-- Envío de datos básicos de pesaje.
-- **No incluye medición de batería**.
-- Pensada como base estable para validación inicial y pruebas educativas.
+Primera versión funcional del sistema.
 
-### Versiones futuras
+Características:
 
-En futuras versiones del firmware se incorporarán:
-- Medición independiente de **dos apoyos (pierna izquierda y derecha)**.
-- Sistema de **monitorización del nivel de batería**.
-- Mejora de filtros y tratamiento de señal.
-- Ampliación del envío de datos y estados.
-- Integración progresiva de análisis avanzado.
+* Medición de fuerza en **un único punto de apoyo**.
+* Lectura mediante HX711.
+* Envío de datos de peso.
+* No incluye medición de batería.
+* Base para validación inicial.
 
 ---
 
-## 🔁 Pasos seguidos para la replicación electrónica
+### 🔹 PesajeV2
 
-1. Definición del caso de uso clínico y educativo.
-2. Selección de células de carga adecuadas para carga humana.
-3. Elección del HX711 como ADC dedicado.
-4. Selección del ESP32 por conectividad y versatilidad.
-5. Diseño del sistema de alimentación autónomo.
-6. Desarrollo del firmware base (PesajeV1).
-7. Validación funcional con cargas controladas.
+Versión mejorada del sistema.
+
+Novedades:
+
+* ✅ Medición de **nivel de batería en porcentaje**.
+* ✅ Lectura de batería mediante ADC + divisor resistivo.
+* ✅ Calibración del ADC para mayor precisión.
+* ✅ Mejora en estabilidad de lectura.
+
+Esta versión representa una evolución hacia un sistema más completo y autónomo.
+
+---
+
+### 🔮 Versiones futuras
+
+* Medición de **doble apoyo (izquierda/derecha)**.
+* Mejora de filtrado y tratamiento de señal.
+* Optimización de consumo energético.
+* Integración de análisis avanzado e IA.
+
+---
+
+## 🔌 Hardware (KiCad)
+
+El repositorio incluye el diseño electrónico completo desarrollado en **KiCad**:
+
+### Contenido:
+
+* 📄 Esquema eléctrico
+* 🧩 Diseño de PCB
+* 📦 Archivos listos para fabricación
+
+### Versiones:
+
+* Hardware compatible con **PesajeV1**
+* Hardware actualizado para **PesajeV2 (con medición de batería)**
+
+Esto permite replicar el sistema físico de forma completa.
+
+---
+
+## 🔁 Pasos para la replicación
+
+1. Definición del caso de uso.
+2. Selección de sensores de fuerza.
+3. Integración con HX711.
+4. Implementación con ESP32.
+5. Diseño del sistema de alimentación.
+6. Desarrollo del firmware.
+7. Validación con cargas reales.
 
 ---
 
 ## ⚠️ Consideraciones importantes
 
-- El sistema está diseñado como **herramienta de apoyo**, no como dispositivo médico certificado.
-- La correcta fijación mecánica de las células de carga es crítica para la fiabilidad de las medidas.
-- El firmware está pensado para ser **leído, modificado y ampliado** en contextos educativos.
+* Este sistema es una **herramienta de apoyo**, no un dispositivo médico certificado.
+* La fijación mecánica de las células de carga es crítica.
+* El sistema está diseñado para ser **modular y ampliable**.
+* La medición de batería requiere calibración del ADC para mayor precisión.
+
+---
+
+## 📁 Estructura del repositorio
+
+* `/firmware` → Código del ESP32 (V1 y V2)
+* `/hardware` → Proyecto KiCad (esquema + PCB)
+* `/docs` → Documentación adicional (opcional)
 
 ---
 
 ## 📱 Repositorio de la App
 
 Frontend y visualización de datos:
-[SmartRehabBarApp](https://github.com/ichueca/SmartRehabBar-App)
+https://github.com/ichueca/SmartRehabBar-App
 
 ---
 
 ## 👥 Autores
 
-- Jonathan Arizala – [La Salle Berrozpe](https://lasalleberrozpe.eus)
-- Ainhoa Domínguez – [Nazaret Zentroa](https://nazaret.eus/)
-- Iñigo Chueca – [Zabalburu Ikastetxea](https://www.zabalburu.org)
+* Jonathan Arizala – https://lasalleberrozpe.eus
+* Ainhoa Domínguez – https://nazaret.eus/
+* Iñigo Chueca – https://www.zabalburu.org
 
-Proyecto subvencionado por la Viceconsejería de Formación Profesional del Gobierno Vasco a través de [Tknika](https://tknika.eus/).
-
+Proyecto subvencionado por la Viceconsejería de Formación Profesional del Gobierno Vasco a través de https://tknika.eus/
