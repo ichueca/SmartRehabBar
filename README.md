@@ -46,7 +46,7 @@ El sistema electrónico se compone de los siguientes bloques:
 
 ### Microcontrolador
 
-* **ESP32 / ESP32-C3**
+* **ESP32 / ESP32-C3 SuperMini**
 
   * Lectura del HX711.
   * Procesado de datos.
@@ -62,7 +62,7 @@ El sistema electrónico se compone de los siguientes bloques:
   * Power-path (uso y carga simultánea).
 * **Convertidor Buck-Boost (TPS63020)**
 
-  * Generación de tensión estable para el sistema.
+  * Generación de tensión estable para el sistema (3.3 V).
 * **Divisor resistivo**
 
   * Medición del voltaje de batería mediante ADC.
@@ -77,7 +77,7 @@ En este repositorio se incluyen varias versiones del firmware:
 
 Primera versión funcional del sistema.
 
-Características:
+**Características:**
 
 * Medición de fuerza en **un único punto de apoyo**.
 * Lectura mediante HX711.
@@ -91,23 +91,39 @@ Características:
 
 Versión mejorada del sistema.
 
-Novedades:
+**Novedades:**
 
 * ✅ Medición de **nivel de batería en porcentaje**.
 * ✅ Lectura de batería mediante ADC + divisor resistivo.
 * ✅ Calibración del ADC para mayor precisión.
 * ✅ Mejora en estabilidad de lectura.
 
-Esta versión representa una evolución hacia un sistema más completo y autónomo.
+---
+
+### 🔹 PesajeV3
+
+Versión actual del sistema.
+
+**Novedades principales:**
+
+* ✅ Medición de **doble apoyo (pie izquierdo y derecho)**.
+* ✅ Uso de **dos módulos HX711** (uno por cada plataforma).
+* ✅ Migración a **ESP32-C3 SuperMini** (reducción de tamaño y consumo).
+* ✅ Lectura simultánea de ambos sensores.
+* ✅ Envío independiente de datos de cada pie al backend.
+* ✅ Mejora en la arquitectura del firmware (estructura modular).
+
+Esta versión permite analizar **asimetrías de carga entre ambos pies**, siendo mucho más útil en entornos reales de rehabilitación.
 
 ---
 
 ### 🔮 Versiones futuras
 
-* Medición de **doble apoyo (izquierda/derecha)**.
 * Mejora de filtrado y tratamiento de señal.
+* Detección de eventos (apoyo, descarga, equilibrio).
 * Optimización de consumo energético.
 * Integración de análisis avanzado e IA.
+* Visualización avanzada de métricas (balance, evolución, tendencias).
 
 ---
 
@@ -124,9 +140,13 @@ El repositorio incluye el diseño electrónico completo desarrollado en **KiCad*
 ### Versiones:
 
 * Hardware compatible con **PesajeV1**
-* Hardware actualizado para **PesajeV2 (con medición de batería)**
+* Hardware actualizado para **PesajeV2 (medición de batería)**
+* 🆕 Hardware **SmartRehab V3**
 
-Esto permite replicar el sistema físico de forma completa.
+  * Soporte para **doble HX711**
+  * Integración con **ESP32-C3 SuperMini**
+  * Optimización del sistema de alimentación
+  * Diseño compacto orientado a integración en plataforma
 
 ---
 
@@ -147,15 +167,24 @@ Esto permite replicar el sistema físico de forma completa.
 * Este sistema es una **herramienta de apoyo**, no un dispositivo médico certificado.
 * La fijación mecánica de las células de carga es crítica.
 * El sistema está diseñado para ser **modular y ampliable**.
-* La medición de batería requiere calibración del ADC para mayor precisión.
+* La medición de batería requiere calibración del ADC.
+* Las mediciones de peso requieren **calibración (tara + escala)** tras cambios mecánicos.
 
 ---
 
 ## 📁 Estructura del repositorio
 
-* `/firmware` → Código del ESP32 (V1 y V2)
-* `/hardware` → Proyecto KiCad (esquema + PCB)
-* `/docs` → Documentación adicional (opcional)
+* `/firmware`
+
+  * `PesajeV1`
+  * `PesajeV2`
+  * `PesajeV3` 🆕
+* `/hardware`
+
+  * `PCB_SmartRehab_V1`
+  * `PCB_SmartRehab_V2`
+  * `PCB_SmartRehab_V3` 🆕
+* `/docs` → Documentación adicional
 
 ---
 
